@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Grid</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .image-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .image-card {
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease-in-out;
+            position: relative;
+        }
+
+        .image-card:hover {
+            transform: scale(1.1);
+        }
+
+        img {
+            display: block;
+            width: 100%;
+            height: auto;
+            border-radius: 8px 8px 0 0;
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .image-card:hover .overlay {
+            opacity: 1;
+        }
+
+        .overlay a {
+            text-decoration: none;
+            color: #fff;
+            background-color: #3498db;
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin-top: 10px;
+            font-weight: bold;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .overlay a:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <h2>List of images</h2>
+    <div class="image-list">
+        {% for image in images %}
+            <div class="image-card">
+                <img src="{{ url_for('static', filename=image.path) }}" alt="{{ image.name }}">
+                <div class="overlay">
+                    <a href="{{ url_for('show_top_similar_images', image_name=image.name) }}">Show Similar</a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</body>
+</html>
